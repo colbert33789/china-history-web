@@ -232,12 +232,42 @@ nav, header, section, footer { position: relative; z-index: 2; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ===== 时间轴 ===== */
+.timeline-box { position: relative; }
 .timeline-wrap {
   overflow-x: auto;
   padding: 60px 0 80px;
   scrollbar-width: none;
+  cursor: grab;
+  scroll-behavior: smooth;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
+.timeline-wrap.dragging { cursor: grabbing; scroll-behavior: auto; }
 .timeline-wrap::-webkit-scrollbar { display: none; }
+.t-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(10, 10, 16, 0.75);
+  backdrop-filter: blur(8px);
+  color: var(--gold);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.t-arrow:hover {
+  background: var(--gold);
+  color: #1a1206;
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.4);
+}
+.t-arrow.prev { left: 16px; }
+.t-arrow.next { right: 16px; }
+.t-arrow.hidden { opacity: 0; pointer-events: none; }
 .timeline-track {
   display: flex;
   align-items: flex-start;
@@ -520,5 +550,35 @@ footer .copy { margin-top: 18px; font-size: 12px; opacity: 0.6; }
   }
   .dynasty-head { position: static; }
   .dynasty-char { font-size: 100px; }
-  .nav-links { display: none; }
+  .dynasty-char.multi { font-size: 44px; }
+  .nav-inner { padding: 14px 16px; }
+  .logo { font-size: 20px; letter-spacing: 2px; }
+  .nav-links a { margin-left: 18px; font-size: 13px; letter-spacing: 1px; }
+  .hero-title { letter-spacing: 6px; }
+  .hero-sub { font-size: 15px; letter-spacing: 3px; padding: 0 20px; }
+  .hero-stats { gap: 20px 36px; }
+  .section-title { padding: 80px 20px 16px; }
+  .section-title em { letter-spacing: 6px; }
+  .t-node { width: 132px; }
+  .t-node .name { font-size: 24px; }
+  .t-node .years { font-size: 10px; letter-spacing: 1px; }
+  .timeline-track { padding: 0 10vw; }
+  .t-arrow { display: none; }
+  #dynastyList { padding: 24px 16px 40px; gap: 64px; }
+  .panel { padding: 22px 20px; }
+  .figure-grid { grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 16px 90px; }
+  .figure-card { padding: 22px 18px; }
+  .figure-card::before { font-size: 110px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { letter-spacing: 4px; }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .hero-seal { width: 68px; height: 68px; font-size: 36px; }
+  .figure-grid { grid-template-columns: 1fr; }
+  .event { padding-left: 16px; }
+  .timeline-wrap {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
 }

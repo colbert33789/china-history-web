@@ -193,6 +193,63 @@ document.getElementById('figureGrid').innerHTML = FIGURES.map(f => `
     <p class="f-desc">${f.desc}</p>
   </div>`).join('');
 
+/* 时间轴拖拽滚动 */
+const wrap = document.getElementById('timelineWrap');
+let dragStart = null, dragMoved = false;
+wrap.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'touch') return; // 触屏交给原生滚动
+  dragStart = { x: e.clientX, left: wrap.scrollLeft };
+  dragMoved = false;
+  wrap.classList.add('dragging');
+});
+addEventListener('pointercancel', () => {
+  wrap.classList.remove('dragging');
+  dragStart = null;
+});
+addEventListener('pointermove', e => {
+  if (!dragStart) return;
+  const dx = e.clientX - dragStart.x;
+  if (Math.abs(dx) > 6) dragMoved = true;
+  wrap.scrollLeft = dragStart.left - dx;
+});
+addEventListener('pointerup', () => {
+  wrap.classList.remove('dragging');
+  dragStart = null;
+});
+// 拖拽后阻止误触点击
+track.addEventListener('click', e => {
+  if (dragMoved) {
+    e.stopPropagation();
+    e.preventDefault();
+    dragMoved = false;
+  }
+}, true);
+
+/* 箭头按钮与边界状态 */
+const tPrev = document.getElementById('tPrev');
+const tNext = document.getElementById('tNext');
+const step = () => Math.max(wrap.clientWidth * 0.6, 300);
+tPrev.addEventListener('click', () => wrap.scrollBy({ left: -step(), behavior: 'smooth' }));
+tNext.addEventListener('click', () => wrap.scrollBy({ left: step(), behavior: 'smooth' }));
+function updateArrows() {
+  tPrev.classList.toggle('hidden', wrap.scrollLeft <= 4);
+  tNext.classList.toggle('hidden',
+    wrap.scrollLeft >= wrap.scrollWidth - wrap.clientWidth - 4);
+}
+wrap.addEventListener('scroll', updateArrows, { passive: true });
+addEventListener('resize', updateArrows);
+updateArrows();
+
+/* 激活朝代在时间轴中自动居中 */
+function centerNode(i) {
+  const node = nodes[i];
+  if (!node) return;
+  wrap.scrollTo({
+    left: node.offsetLeft - wrap.clientWidth / 2 + node.clientWidth / 2,
+    behavior: 'smooth',
+  });
+}
+
 /* 时间轴点击 / 键盘跳转 */
 function gotoDynasty(node) {
   document.getElementById(`dynasty-${node.dataset.index}`)
@@ -323,8 +380,10 @@ const nodes = document.querySelectorAll('.t-node');
 const spy = new IntersectionObserver(entries => {
   entries.forEach(en => {
     if (en.isIntersecting) {
+      const i = +en.target.id.split('-')[1];
       nodes.forEach(n => n.classList.remove('active'));
-      nodes[+en.target.id.split('-')[1]].classList.add('active');
+      nodes[i].classList.add('active');
+      centerNode(i);
     }
   });
 }, { rootMargin: '-40% 0px -50% 0px' });
