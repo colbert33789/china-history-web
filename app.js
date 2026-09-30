@@ -30,6 +30,14 @@ dynastyList.innerHTML = DYNASTIES.map((d, i) => `
           ${d.people.map(p => `<span class="chip">${p[0]}<small>${p[1]}</small></span>`).join('')}
         </div>
       </div>
+      <div class="world">
+        <h4 class="world-h">同期世界</h4>
+        ${d.world.map(w => `
+          <div class="event world-e">
+            <b>${w.title}<i>${w.year}</i></b>
+            <p>${w.desc}</p>
+          </div>`).join('')}
+      </div>
     </div>
   </article>`).join('');
 

@@ -6,6 +6,7 @@ const { test, expect } = require('@playwright/test');
 const { DYNASTIES, FIGURES } = require('../data.js');
 
 const TOTAL_EVENTS = DYNASTIES.reduce((s, d) => s + d.events.length, 0);
+const TOTAL_WORLD = DYNASTIES.reduce((s, d) => s + d.world.length, 0);
 const TOTAL_PEOPLE = DYNASTIES.reduce((s, d) => s + d.people.length, 0) + FIGURES.length;
 
 test.beforeEach(async ({ page }) => {
@@ -59,7 +60,10 @@ test('时间轴箭头：起点隐藏左箭头，终点隐藏右箭头', async ({
 
 test('朝代卡片内容与多字朝代表述正确', async ({ page }) => {
   await expect(page.locator('.dynasty')).toHaveCount(DYNASTIES.length);
-  await expect(page.locator('.event')).toHaveCount(TOTAL_EVENTS);
+  await expect(page.locator('.event:not(.world-e)')).toHaveCount(TOTAL_EVENTS);
+  await expect(page.locator('.event.world-e')).toHaveCount(TOTAL_WORLD);
+  // 每个朝代都有同期世界板块
+  await expect(page.locator('.world')).toHaveCount(DYNASTIES.length);
   // 多字朝代不得出现「三国朝」这类错误表述
   const heads = await page.locator('.dynasty-head h3').allTextContents();
   expect(heads).toContain('三国时期');

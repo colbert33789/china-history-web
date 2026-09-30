@@ -21,6 +21,7 @@ test('每个朝代字段完整', () => {
     assert.ok(d.tag && d.motto, `${d.name} tag/motto 必填`);
     assert.ok(Array.isArray(d.events) && d.events.length >= 2, `${d.name} 至少 2 条事件`);
     assert.ok(Array.isArray(d.people) && d.people.length >= 2, `${d.name} 至少 2 位人物`);
+    assert.ok(Array.isArray(d.world) && d.world.length >= 2, `${d.name} 至少 2 条同期世界事件`);
   }
 });
 
@@ -30,6 +31,16 @@ test('事件字段完整且无空描述', () => {
       assert.ok(e.title, `${d.name} 事件缺 title`);
       assert.ok(e.year, `${d.name}「${e.title}」缺 year`);
       assert.ok(e.desc && e.desc.length >= 10, `${d.name}「${e.title}」描述过短`);
+    }
+  }
+});
+
+test('同期世界事件字段完整', () => {
+  for (const d of DYNASTIES) {
+    for (const w of d.world) {
+      assert.ok(w.title, `${d.name} 世界事件缺 title`);
+      assert.ok(w.year, `${d.name}「${w.title}」缺 year`);
+      assert.ok(w.desc && w.desc.length >= 10, `${d.name}「${w.title}」描述过短`);
     }
   }
 });
