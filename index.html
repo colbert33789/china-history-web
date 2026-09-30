@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>华夏五千年 · 中国历史长河</title>
+  <meta name="description" content="穿越时空，纵览中华五千年文明：历朝历代重大事件与风云人物">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 粒子背景 -->
+  <canvas id="particles"></canvas>
+  <div class="grain"></div>
+
+  <!-- 导航 -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">华夏<span>五千年</span></a>
+      <div class="nav-links">
+        <a href="#timeline">朝代长河</a>
+        <a href="#dynasties">历代风云</a>
+        <a href="#figures">风流人物</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 首屏 -->
+  <header id="hero">
+    <div class="hero-content">
+      <div class="hero-seal">史</div>
+      <h1 class="hero-title">
+        <span class="line">泱泱华夏</span>
+        <span class="line gold">五千年文明</span>
+      </h1>
+      <p class="hero-sub typed-wrap"><span id="typed"></span><span class="cursor">|</span></p>
+      <div class="hero-stats">
+        <div class="stat"><b data-count="17">0</b><i>朝代更迭</i></div>
+        <div class="stat"><b data-count="50">0</b><i>重大事件</i></div>
+        <div class="stat"><b data-count="40">0</b><i>历史人物</i></div>
+        <div class="stat"><b data-count="5000">0</b><i>文明年轮</i></div>
+      </div>
+      <a href="#timeline" class="scroll-hint"><span></span>顺流而下</a>
+    </div>
+  </header>
+
+  <!-- 时间轴 -->
+  <section id="timeline">
+    <h2 class="section-title reveal"><em>朝代长河</em><small>DYNASTY RIVER</small></h2>
+    <div class="timeline-wrap">
+      <div class="timeline-track" id="timelineTrack"></div>
+    </div>
+  </section>
+
+  <!-- 朝代详情 -->
+  <section id="dynasties">
+    <h2 class="section-title reveal"><em>历代风云</em><small>RISE &amp; FALL</small></h2>
+    <div id="dynastyList"></div>
+  </section>
+
+  <!-- 人物 -->
+  <section id="figures">
+    <h2 class="section-title reveal"><em>风流人物</em><small>LEGENDS</small></h2>
+    <p class="section-desc reveal">江山如画，一时多少豪杰</p>
+    <div class="figure-grid" id="figureGrid"></div>
+  </section>
+
+  <footer>
+    <div class="footer-seal">史</div>
+    <p>以铜为镜，可以正衣冠；以史为镜，可以知兴替</p>
+    <p class="copy">© 2026 华夏五千年 · China History Web</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
