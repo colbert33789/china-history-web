@@ -264,6 +264,11 @@ nav, header, section, footer { position: relative; z-index: 2; }
   transition: transform 0.3s;
 }
 .t-node:hover { transform: translateY(-6px); }
+.t-node:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
 .t-node::before {
   content: '';
   position: absolute;
@@ -336,6 +341,7 @@ nav, header, section, footer { position: relative; z-index: 2; }
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 6px 24px rgba(212, 175, 55, 0.3));
 }
+.dynasty-char.multi { font-size: 54px; letter-spacing: 4px; white-space: nowrap; }
 .dynasty-head h3 {
   margin-top: 12px;
   font-size: 26px;

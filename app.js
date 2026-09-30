@@ -94,7 +94,7 @@ const DYNASTIES = [
     name: '五代十国', years: '907 – 979', tag: '乱世棋局', motto: '城头变幻大王旗',
     events: [
       { title: '朱温篡唐', year: '907年', desc: '唐亡，中原先后更替五个短命王朝，南方十国并立。' },
-      { title: '石敬瑭割燕云', year: '936年', desc: '幽云十六州拱手让予契丹，中原门户洞开四百年。' },
+      { title: '石敬瑭割燕云', year: '938年', desc: '幽云十六州正式割让予契丹，中原门户洞开四百年。' },
       { title: '陈桥兵变', year: '960年', desc: '赵匡胤黄袍加身建宋，乱世终见一统曙光。' },
     ],
     people: [['李煜', '词中帝王'], ['柴荣', '五代英主'], ['冯道', '政坛不倒翁']],
@@ -111,7 +111,7 @@ const DYNASTIES = [
   {
     name: '元', years: '1271 – 1368', tag: '铁蹄与大都会', motto: '一代天骄，弯弓射雕',
     events: [
-      { title: '忽必烈建元', year: '1271年', desc: '定国号「大元」，灭南宋，疆域横跨欧亚的空前帝国。' },
+      { title: '忽必烈建元', year: '1271年', desc: '定国号「大元」，1279年灭南宋，疆域空前辽阔，驿站贯通欧亚。' },
       { title: '马可·波罗来华', year: '1275年', desc: '元大都繁华震惊欧洲，《马可·波罗游记》风靡西方。' },
       { title: '红巾军起义', year: '1351年', desc: '「莫道石人一只眼」，元末民变星火燎原。' },
     ],
@@ -133,7 +133,7 @@ const DYNASTIES = [
       { title: '鸦片战争', year: '1840年', desc: '虎门销烟引来坚船利炮，《南京条约》开启百年屈辱史。' },
       { title: '辛亥革命', year: '1911年', desc: '武昌首义，1912年溥仪退位，两千年帝制就此终结。' },
     ],
-    people: [['康熙', '千古一帝'], ['林则徐', '禁烟英雄'], ['曾国藩', '中兴名臣'], ['慈禧', '铁腕太后'], ['孙中山', '革命先驱']],
+    people: [['康熙', '盛世明君'], ['林则徐', '禁烟英雄'], ['曾国藩', '中兴名臣'], ['慈禧', '铁腕太后'], ['孙中山', '革命先驱']],
   },
 ];
 
@@ -155,7 +155,7 @@ const FIGURES = [
 /* ================= 渲染 ================= */
 const track = document.getElementById('timelineTrack');
 track.innerHTML = DYNASTIES.map((d, i) => `
-  <div class="t-node" data-index="${i}">
+  <div class="t-node" data-index="${i}" role="button" tabindex="0" aria-label="跳转到${d.name}">
     <span class="years">${d.years}</span>
     <span class="name">${d.name}</span>
     <span class="tag">${d.tag}</span>
@@ -165,8 +165,8 @@ const dynastyList = document.getElementById('dynastyList');
 dynastyList.innerHTML = DYNASTIES.map((d, i) => `
   <article class="dynasty reveal" id="dynasty-${i}">
     <div class="dynasty-head">
-      <div class="dynasty-char">${d.name.length > 1 ? d.name[0] : d.name}</div>
-      <h3>${d.name}朝</h3>
+      <div class="dynasty-char${d.name.length > 1 ? ' multi' : ''}">${d.name}</div>
+      <h3>${d.name.length > 1 ? d.name + '时期' : d.name + '朝'}</h3>
       <span class="years">${d.years}</span>
       <p class="motto">${d.motto}</p>
     </div>
@@ -193,12 +193,21 @@ document.getElementById('figureGrid').innerHTML = FIGURES.map(f => `
     <p class="f-desc">${f.desc}</p>
   </div>`).join('');
 
-/* 时间轴点击跳转 */
-track.addEventListener('click', e => {
-  const node = e.target.closest('.t-node');
-  if (!node) return;
+/* 时间轴点击 / 键盘跳转 */
+function gotoDynasty(node) {
   document.getElementById(`dynasty-${node.dataset.index}`)
     .scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+track.addEventListener('click', e => {
+  const node = e.target.closest('.t-node');
+  if (node) gotoDynasty(node);
+});
+track.addEventListener('keydown', e => {
+  const node = e.target.closest('.t-node');
+  if (node && (e.key === 'Enter' || e.key === ' ')) {
+    e.preventDefault();
+    gotoDynasty(node);
+  }
 });
 
 /* ================= 粒子背景 ================= */
@@ -277,7 +286,13 @@ let li = 0, ci = 0, deleting = false;
   else { deleting = false; li = (li + 1) % LINES.length; setTimeout(type, 400); }
 })();
 
-/* ================= 数字滚动 ================= */
+/* ================= 数字滚动（由真实数据驱动） ================= */
+document.getElementById('statDynasty').dataset.count = DYNASTIES.length;
+document.getElementById('statEvent').dataset.count =
+  DYNASTIES.reduce((s, d) => s + d.events.length, 0);
+document.getElementById('statPeople').dataset.count =
+  DYNASTIES.reduce((s, d) => s + d.people.length, 0) + FIGURES.length;
+
 function countUp(el) {
   const target = +el.dataset.count;
   const dur = 1600, t0 = performance.now();
