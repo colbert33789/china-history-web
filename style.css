@@ -4,9 +4,9 @@
   --gold: #d4af37;
   --gold-light: #f3d97b;
   --red: #c0392b;
-  --ink: #e8e0cf;
-  --ink-dim: #8a8474;
-  --card: rgba(255, 255, 255, 0.04);
+  --ink: #f2ecdc;
+  --ink-dim: #b6ad97;
+  --card: rgba(24, 24, 34, 0.72);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -67,7 +67,7 @@ nav, header, section, footer { position: relative; z-index: 2; }
 }
 .logo span { color: var(--gold); }
 .nav-links a {
-  color: var(--ink-dim);
+  color: #c9c1ac;
   text-decoration: none;
   margin-left: 32px;
   font-size: 15px;
@@ -146,7 +146,8 @@ nav, header, section, footer { position: relative; z-index: 2; }
   margin-top: 28px;
   font-size: 18px;
   letter-spacing: 6px;
-  color: var(--ink-dim);
+  color: #c9c1ac;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
   min-height: 28px;
 }
 .cursor { animation: blink 0.8s step-end infinite; color: var(--gold); }
@@ -319,9 +320,10 @@ nav, header, section, footer { position: relative; z-index: 2; }
   top: -6px; left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--ink-dim);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #b6ad97;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
 }
 .t-node .name {
   font-family: 'ZCOOL XiaoWei', serif;
@@ -333,9 +335,10 @@ nav, header, section, footer { position: relative; z-index: 2; }
 .t-node .tag {
   display: block;
   margin-top: 6px;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--ink-dim);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #b6ad97;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
 }
 
 /* ===== 朝代卡片 ===== */
@@ -393,10 +396,11 @@ nav, header, section, footer { position: relative; z-index: 2; }
 
 .panel {
   background: var(--card);
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 16px;
   padding: 28px 32px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   transition: border-color 0.3s, transform 0.3s;
 }
 .panel:hover { border-color: rgba(212, 175, 55, 0.4); }
@@ -441,9 +445,9 @@ nav, header, section, footer { position: relative; z-index: 2; }
 }
 .event p {
   margin-top: 6px;
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--ink-dim);
+  font-size: 15px;
+  line-height: 1.9;
+  color: #cdc5b1;
 }
 .people { margin-top: 28px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -480,8 +484,8 @@ nav, header, section, footer { position: relative; z-index: 2; }
   position: relative;
   border-radius: 16px;
   padding: 30px 26px;
-  background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
-  border: 1px solid rgba(212, 175, 55, 0.18);
+  background: linear-gradient(160deg, rgba(26,26,38,0.85), rgba(18,18,28,0.85));
+  border: 1px solid rgba(212, 175, 55, 0.25);
   overflow: hidden;
   transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
   transform-style: preserve-3d;
@@ -513,9 +517,9 @@ nav, header, section, footer { position: relative; z-index: 2; }
 }
 .figure-card .f-desc {
   margin-top: 16px;
-  font-size: 13.5px;
-  line-height: 1.8;
-  color: var(--ink-dim);
+  font-size: 14px;
+  line-height: 1.9;
+  color: #cdc5b1;
 }
 
 /* ===== 页脚 ===== */
