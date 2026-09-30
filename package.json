@@ -1,0 +1,14 @@
+{
+  "name": "china-history-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "华夏五千年 · 中国历史长河网站",
+  "scripts": {
+    "test": "npm run test:data && npm run test:e2e",
+    "test:data": "node --test tests/data.test.js",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
